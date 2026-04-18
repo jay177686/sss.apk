@@ -1,6 +1,7 @@
 name: Build APK
 
-on: workflow_dispatch
+on: 
+  workflow_dispatch
 
 jobs:
   build:
@@ -10,9 +11,14 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: '3.11'
-      - run: pip install flet
-      - run: flet build apk main.py
-      - uses: actions/upload-artifact@v4
+      - name: Install Flet
+        run: |
+          pip install flet
+      - name: Build APK
+        run: |
+          flet build apk
+      - name: Upload APK
+        uses: actions/upload-artifact@v4
         with:
-          name: app
+          name: overtime-app
           path: build/apk/*.apk
